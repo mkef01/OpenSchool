@@ -1,0 +1,57 @@
+﻿@model OpenSchool.Models.Login
+@{
+    ViewBag.Title = "Login Open School";
+    Layout = "~/Views/Shared/_layout(Login).cshtml";
+}
+<div class="materialContainer">
+@using (Html.BeginForm("index", "Login", FormMethod.Post))
+ {
+	<div class="box">
+
+		<div class="title">Open School</div>
+
+		<div class="input">
+			@Html.AntiForgeryToken()
+			<label for="name">Nombre Usuario</label>
+			@Html.TextBoxFor(model => model.Usuario,new {@type="text",name="name",id="name"})
+			<span class="spin"></span>
+		</div>
+
+		<div class="input">
+			<label for="pass">Password</label>
+			@Html.TextBoxFor(model => model.Contraseña, new { @type = "password", name = "pass", id = "pass" })
+			<span class="spin"></span>
+		</div>
+
+		<div class="button login">
+			<button type="submit"><span>Entrar</span> <i class="fa fa-check"></i></button>
+		</div>
+	</div>
+ }
+@using (Html.BeginForm("Visita", "Login", FormMethod.Post))
+ {
+		<div class="overbox">
+			@Html.AntiForgeryToken()
+			<div class="material-button alt-2"><span class="shape"></span>
+			</div>
+
+			<div class="title">Visitante</div>
+
+			<div class="input">
+				<label for="regname">Nombre Visitante</label>
+				@Html.TextBoxFor(model => model.NombreVisitante, new { @type = "text", name = "regname", id = "regname"})
+				<span class="spin"></span>
+			</div>
+
+			<div class="input">
+				<label for="regpass">Correo Visitante</label>
+				@Html.TextBoxFor(model => model.CorreoVisitante, new { @type = "email", name = "regpass", id = "regpass" })
+				<span class="spin"></span>
+			</div>>
+
+			<div class="button">
+				<button type="submit"><span>Bienvenido</span></button>
+			</div>
+		</div>
+ }
+</div>

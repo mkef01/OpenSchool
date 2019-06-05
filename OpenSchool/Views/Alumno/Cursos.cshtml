@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OpenSchool.Models.Cursos>
+@{
+	ViewBag.Title = "Cursos";
+}
+@if (ViewBag.resultado != null)
+{
+	if (ViewBag.resultado == "Exito")
+	{
+		<div class="alert alert-success" role="alert">
+			Peticion enviada con exito @Html.ActionLink("Regresar a Inscripcion", "Cursos", "Alumno")
+		</div>
+	}
+	if (ViewBag.resultado == "Repetido")
+	{
+		<div class="alert alert-warning" role="alert">
+			La peticion del curso @ViewBag.curso ya esta ingresada @Html.ActionLink("Regresar a Inscripcion", "Cursos", "Alumno")
+		</div>
+	}
+	if (ViewBag.resultado == "Excedido")
+	{
+		<div class="alert alert-warning" role="alert">
+			Tiene tres cursos activos, termine un curso para poder inscribir un nuevo curso @Html.ActionLink("Regresar a Inscripcion", "Index", "Home")
+		</div>
+	}
+	
+}
+@if (ViewBag.resultado == null)
+{
+	foreach (var item in Model)
+	{
+		using (Html.BeginForm("Cursos", "Alumno", FormMethod.Post))
+		{
+			<div class="row">
+				<div class="card col-md-8 offset-md-2">
+					<div class="card-header">
+						@Html.DisplayFor(model => item.Nombre)
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">@Html.DisplayFor(model => item.Nombre)</h5>
+						<p class="card-text">Fecha Inicio: @Html.DisplayFor(model => item.FechaInicio)</p>
+						<p class="card-text">Fecha Fin: @Html.DisplayFor(model => item.FechaFin)</p>
+						<button type="submit" class="btn btn-outline-primary">Inscribirse</button>
+					</div>
+				</div>
+			</div>
+			@Html.TextBox("usuario", @User.Identity.Name, new { hidden = "hidden" })
+			@Html.TextBox("curso", item.IdCurso, new { hidden = "hidden" })
+		}
+	}
+
+}

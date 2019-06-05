@@ -1,0 +1,24 @@
+﻿@model IEnumerable<OpenSchool.Models.Modelo_Proyecto.Reporte>
+@{
+    ViewBag.Title = "Alumnos";
+}
+<br/>
+<div class="table-responsive">
+	<table class="table table-striped table-dark">
+		<thead>
+		<tr>
+			<th scope="col">Email</th>
+			<th scope="col">Revisar Progreso</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach(var item in Model)
+		{
+			<tr>
+				<td>@Html.DisplayFor(model => item.Email)</td>
+				<td>@Html.ActionLink("Revisar","Redirect",new {id = item.IdAlumno,usuario = item.IdAlumno })</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>

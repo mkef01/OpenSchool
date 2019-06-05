@@ -1,0 +1,108 @@
+﻿
+@{
+	ViewBag.Title = "Informe";
+}
+<div class="col-lg-12">
+	<div class="card">
+		<div class="container">
+			<h2 id="header">
+				<strong>Reportes Gráficos</strong>
+				@*<small class="text-muted">Jan 2015 &#8211; Dec 2015</small>*@
+			</h2>
+
+			<div class="row m-b-1">
+				<div class="col-lg-12">
+					<div class="card shadow">
+						<h4 class="card-header">Avance en Cursos</h4>
+						<div class="card-block" style="height:530px">
+							<div id="revenue-column-chart"></div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- row -->
+			<br />
+			<div class="row m-b-1">
+
+				<div class="col-lg-12">
+					<div class="card shadow">
+						<h4 class="card-header">Notas Cursos</h4>
+						<div class="card-block" style="height:430px">
+							<div id="orders-spline-chart"></div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- row -->
+		</div> <!-- container -->
+	</div>
+</div>
+@Html.ActionLink("Aprobar Estudiante", "Aplicar", new { id = ViewBag.cur, alum = ViewBag.alum })
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js">
+</script>
+<script>
+    (function() {
+    demo = {initDashboardPageCharts: function () {
+				var totalRevenue = 15341110;
+
+				// CanvasJS column chart to show revenue from Jan 2015 - Dec 2015
+				var revenueColumnChart = new CanvasJS.Chart("revenue-column-chart", {
+					animationEnabled: true,
+					backgroundColor: "transparent",
+                    theme: "theme2",
+					axisX: {
+                        labelFontSize: 14
+					},
+					axisY: {
+                        labelFontSize: 14,
+                        prefix: "%"
+                    },
+					toolTip: {
+						borderThickness: 0,
+						cornerRadius: 0
+					},
+					data: [
+						{
+							type: "column",
+                            dataPoints: @Html.Raw(ViewBag.AlumnCurso)
+						}
+                        ]
+				});
+
+				revenueColumnChart.render();
+
+				//CanvasJS spline chart to show orders from Jan 2015 to Dec 2015
+                var ordersSplineChart = new CanvasJS.Chart("orders-spline-chart", {
+                    animationEnabled: true,
+                    backgroundColor: "transparent",
+                    theme: "theme2",
+                    toolTip: {
+                        borderThickness: 0,
+                        cornerRadius: 0
+                    },
+                    axisX: {
+                        labelFontSize: 14
+                    },
+                    axisY: {
+                        gridThickness: 0,
+                        labelFontSize: 14,
+                        lineThickness: 2,
+                        prefix: "%"
+                    },
+                    data: [
+                        {
+                            type: "column",
+                           dataPoints: @Html.Raw(ViewBag.AlumnNot)
+                        }
+                        ]
+				});
+
+                ordersSplineChart.render();
+
+
+    }
+        }
+
+        demo.initDashboardPageCharts();
+    })();
+
+
+</script>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OpenSchool.Models.RegistroCurso>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Listado de Registro por Cursos</h2>
+        </div>
+
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cursos.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstadoRegistro.Estado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuarios.Email)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cursos.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoRegistro.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usuarios.Email)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdRegistroCurso }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.IdRegistroCurso }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRegistroCurso })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@model OpenSchool.Models.Cursos
+@{
+    ViewBag.Title = "Asignar Fechas";
+}
+@using (Html.BeginForm("Index", "CursoFecha", FormMethod.Post))
+{
+	<div class="form-group">
+		<p></p>
+		Seleccione un curso:
+		<p></p>
+		@Html.DropDownListFor(model => model.IdCurso, new SelectList(ViewBag.curso, "codcurso", "nombre"), new {@class = "form-control"})
+		<p></p>
+		<button class="btn btn-success" type="submit">Asignar Fecha</button>
+	</div>
+}

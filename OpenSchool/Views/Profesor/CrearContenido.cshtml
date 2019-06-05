@@ -1,0 +1,36 @@
+﻿@model OpenSchool.Models.Modelo_Proyecto.Contenido
+@{
+	ViewBag.Title = "CrearContenido";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("CrearContenido", "Profesor", FormMethod.Post))
+{
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h4>Agregar Contenido</h4>
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label>Curso al que desea agregar contenido</label>
+					@Html.DropDownListFor(model => model.curso, new SelectList(ViewBag.curso, "IdCurso", "Nombre"), new { @class = "form-control" })
+				</div>
+				<div class="form-group">
+					<label>Seccion</label>
+					@Html.TextBoxFor(model => model.link, new { @type = "file", @class = "form-control" })
+				</div>
+				<div class="form-group">
+					<label>Texto</label>
+					@Html.TextAreaFor(model => model.Texto,new {@class = "form-control",placeholder = "Escribir Texto"})
+				</div>
+				<div class="form-group">
+					<label>Hipervinculo</label>
+					@Html.TextBoxFor(model => model.link, new { @type = "text", @Placeholder = "Hipervinvulo", @class = "form-control" })
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Crear Curso" class="btn btn-primary">
+				</div>
+			</div>
+		</div>
+	</div>
+}

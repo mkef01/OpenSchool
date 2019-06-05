@@ -1,0 +1,35 @@
+﻿@model IEnumerable<OpenSchool.Models.NivelCursos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <br />
+    <p class="h1">Listado de Niveles de los Cursos</p>
+</div>
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DetalleNivel)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DetalleNivel)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdNivel }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdNivel }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdNivel })
+        </td>
+    </tr>
+}
+
+</table>

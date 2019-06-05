@@ -1,0 +1,78 @@
+﻿@{
+	ViewBag.Title = "Asignar";
+}
+<script src="~/angular.min.js"></script>
+<p></p>
+<div ng-app="Angapp" ng-controller="AngCtrl" class="table-responsive">
+	<table class="table table-hover table-dark">
+		<thead>
+			<tr>
+				<th>Email</th>
+				<th>Cursos Inscritos</th>
+				<th>Inscribir</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="nom in data">
+				<td>{{nom.Usuario}}</td>
+				<td>{{nom.TotalCursos}}</td>
+				<td><input type="checkbox" name="" ng-model="selected" ng-checked="exist(nom)" ng-click="toggleSelection(nom)" class="form-group"/></td>
+			</tr>
+		<tbody>
+	</table>
+</div>
+@Html.ActionLink("Regresar","Index","VerificarInscripcion")
+<script type="text/javascript">
+	var app = angular.module('Angapp', []);
+	app.controller('AngCtrl', function ($scope, $http) {
+		$http.get("/api/agregaralumnos/@ViewBag.curso").then(function (response) { $scope.data = response.data; });
+
+		$scope.selected = [];
+		$scope.exist = function (item) {
+			return $scope.selected.indexOf(item) > -1;
+		};
+		$scope.toggleSelection = function (item) {
+			var datos = {
+				Email: item.Usuario,
+				Curso: @ViewBag.curso
+			}
+			var idx = $scope.selected.indexOf(item);
+			if (idx > -1) {
+				$scope.selected.splice(idx, 1);
+				alert("adios");
+			}
+			else {
+				var api = '/api/agregaralumnos/post';
+				$http.post(api, JSON.stringify(datos)).then(function (response) {
+					Notification.requestPermission();
+					new Notification( "Se agrego el alumno", {
+						body: 'El usuario '+item.Usuario+' Se inscribio Correctamente',
+						icon: '~/favicon.ico'
+					});
+				}, function (error, status) {
+				});
+
+			}
+		};
+
+		$scope.CheckAll = function () {
+			if ($scope.selectAll) {
+				angular.forEach($scope.data, function (item) {
+					idx = $scope.selected.indexOf(item);
+					if (idx >= 0) {
+						return true;
+					}
+					else {
+						$scope.selected.push(item);
+					}
+				})
+			}
+			else {
+				$scope.selected = [];
+			}
+		}
+
+
+
+	});
+</script>

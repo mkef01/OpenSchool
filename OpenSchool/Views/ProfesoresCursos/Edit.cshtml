@@ -1,0 +1,50 @@
+﻿@model OpenSchool.Models.ProfesoresCursos
+
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Editar</h2>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Profesores por Cursos</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.IdProfCur)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdCursos, "IdCursos", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdCursos", String.Empty)
+                        @Html.ValidationMessageFor(model => model.IdCursos)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Id", String.Empty)
+                        @Html.ValidationMessageFor(model => model.Id)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+        </div>
+</div>

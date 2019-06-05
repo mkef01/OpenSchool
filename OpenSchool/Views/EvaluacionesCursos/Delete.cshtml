@@ -1,0 +1,93 @@
+﻿@model OpenSchool.Models.EvaluacionesCursos
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Eliminar</h2>
+        </div>
+        <h3>¿Estás seguro de eliminarlo?</h3>
+        <div>
+            <h4>EvaluacionesCursos</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cursos.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cursos.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TiposEvaluaciones.TipoEvaluacion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TiposEvaluaciones.TipoEvaluacion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Usuarios.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Usuarios.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Detalle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Detalle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Intentos)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Intentos)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ponderacion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ponderacion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaInicio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FechaInicio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaFin)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FechaFin)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                    @Html.ActionLink("Regresar", "Index", new { idCurso = Model.IdCurso})
+                </div>
+            }
+        </div>
+        </div>
+</div>

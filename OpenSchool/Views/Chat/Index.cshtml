@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="frame">
+    <div id="sidepanel">
+        <div id="profile">
+            <div class="wrap">
+                <img id="profile-img" src="@Url.Content("~/Content/no_avatar.png")" class="online" alt="" />
+                <p>@User.Identity.Name</p>
+                <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                <div id="status-options">
+                    <ul>
+                        <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+                        <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+                        <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+                        <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="contacts">
+            <ul>
+                @foreach (var user in @ViewBag.allUsers)
+                {
+                    <li class="contact" href="#" data-contact-id="@user.Id" data-contact-name="@user.UserName">
+                        <div class="wrap">
+                            <span class="contact-status online"></span>
+                            <img src="@Url.Content("~/Content/no_avatar.png")" alt="" />
+                            <div class="meta">
+                                <p class="name">@user.UserName</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="bottom-bar">
+            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="contact-profile">
+            <img src="@Url.Content("~/Content/no_avatar.png")" alt="" />
+            <p id="mensajero"></p>
+            <div class="social-media">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="messages">
+            <ul id="msg-list">
+
+            </ul>
+        </div>
+        <div class="message-input">
+            <div class="wrap">
+                <input id="msg_box" type="text" placeholder="Write your message..." />
+                <button class="submit" id="sendMessage"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        let currentContact = null; // Holds current contact
+        let newMessageTpl =
+            `<li id="msg-{{id}}"> <img src="@Url.Content("~/Content/no_avatar.png")" alt=""/> <p>{{body}}</p></li>`;
+        let socketId = null;
+        let currentconversationChannel = null;
+        let conversationChannelName = null;
+
+        //Pusher client side setup
+        const pusher = new Pusher('ed5c2354a385822ffe87', {
+            authEndpoint: "@Url.Action("AuthForChannel", "Auth")",
+            cluster: 'us2'
+        });
+
+        // get chat data
+        function getChat(contact_id) {
+            $.ajax({
+                url: "@Url.Action("ConversationWithContact","Chat")",
+                type: "GET",
+                data: { contact: contact_id }, success: function (result) {
+                    var chat_data = result.data || [];
+                    loadChat(chat_data);
+                }
+            });
+        }
+
+        //load chat data into view
+        function loadChat(chat_data) {
+
+            chat_data.forEach(function (data) {
+                displayMessage(data);
+            });
+
+            //  $('.chat__body').show();
+            //  $('.__no__chat__').hide();
+        }
+
+        function displayMessage(message_obj) {
+            const msg_id = message_obj.Id;
+            const msg_body = message_obj.message;
+
+            let template = newMessageTpl;
+
+            template = template.replace("{{id}}", msg_id);
+            template = template.replace("{{body}}", msg_body);
+
+            template = $(template);
+
+            if (message_obj.sender_id == '@ViewBag.currentUser.Id') {
+                template.addClass("sent")
+            } else {
+                template.addClass("replies")
+            }
+
+            if (message_obj.status == 1) {
+                template.find('.delivery-status').show();
+            }
+
+            $('#msg-list').append(template);
+        }
+
+        $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+        pusher.connection.bind('connected', function () {
+            socketId = pusher.connection.socket_id;
+        });
+
+        // select contact to chat with
+        $('.contact').click(function (e) {
+            e.preventDefault();
+            $('#msg-list').empty();
+            currentContact = {
+                id: $(this).data('contact-id'),
+                name: $(this).data('contact-name'),
+            };
+
+            if (conversationChannelName) {
+                pusher.unsubscribe(conversationChannelName);
+            }
+
+            conversationChannelName = getConvoChannel(
+                ('@ViewBag.currentUser.Id'),
+                (currentContact.id)
+            );
+            currentconversationChannel = pusher.subscribe(conversationChannelName);
+
+            bind_client_events();
+
+            $('#contacts').find('li').removeClass('active');
+
+            $('#contacts .contact-' + currentContact.id).find('li').addClass('active');
+
+            document.getElementById("mensajero").innerHTML = currentContact.name;
+
+            getChat(currentContact.id);
+        });
+
+        function getConvoChannel(user_id, contact_id) {
+            console.log(user_id.charCodeAt(0));
+            if (user_id.charCodeAt(0) > contact_id.charCodeAt(0)) {
+                return 'private-chat-' + contact_id + '-' + user_id;
+            }
+
+            return 'private-chat-' + user_id + '-' + contact_id;
+        }
+
+        function bind_client_events() {
+            //bind private channel events here
+
+            currentconversationChannel.bind("new_message", function (msg) {
+                //add code here
+                if (msg.receiver_id == '@ViewBag.currentUser.Id') {
+                    displayMessage(msg);
+                }
+            });
+
+            currentconversationChannel.bind("message_delivered", function (msg) {
+                $('#msg-' + msg.id).find('.delivery-status').show();
+            });
+        }
+
+        $('#sendMessage').click(function () {
+            var msg = $('#msg_box').val();
+            $.ajax({
+                url: "@Url.Action("SendMessage", "Chat")",
+                type: "POST",
+                data: { message: msg, contact: currentContact.id, socket_id: socketId }, success: function (result) {
+                    var chat_data = result.data || [];
+                    $('#msg_box').val('');
+                    displayMessage(chat_data);
+                }
+            });
+            $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+        });
+
+
+        };
+
+</script>

@@ -1,0 +1,63 @@
+﻿@model OpenSchool.Models.RespuestasEvaluacion
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Crear</h2>
+        </div>
+
+        @using (Html.BeginForm("Create", "RespuestasEvaluacions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Respuestas Evaluacion</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdPregunta, "IdPregunta", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdPregunta", String.Empty)
+                        @Html.ValidationMessageFor(model => model.IdPregunta)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Respuesta, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Respuesta)
+                        @Html.ValidationMessageFor(model => model.Respuesta)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Ponderacion, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Ponderacion)
+                        @Html.ValidationMessageFor(model => model.Ponderacion)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Correcta, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Correcta)
+                        @Html.ValidationMessageFor(model => model.Correcta)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+        </div>
+        </div>
+</div>

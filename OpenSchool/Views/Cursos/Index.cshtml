@@ -1,0 +1,85 @@
+﻿@model IEnumerable<OpenSchool.Models.Cursos>
+
+@{
+    ViewBag.Title = "Index";
+}
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header d-flex align-items-center">
+                  <h1>Listado de Cursos</h1>
+              </div>
+              <table class="table">
+                  <tr>
+                      <th>
+                          @Html.DisplayNameFor(model => model.Nombre)
+                      </th>
+                      <th>
+                          @Html.DisplayNameFor(model => model.NivelCursos.DetalleNivel)
+                      </th>
+                      <th>
+                          @Html.DisplayNameFor(model => model.SeccionesCursos.DetalleSeccion)
+                      </th>
+                      <th>
+                          @Html.DisplayNameFor(model => model.EstadoCurso.Estado)
+                      </th>
+                      <th>
+                          @Html.DisplayNameFor(model => model.FechaInicio)
+                      </th>
+                      <th>
+                          @Html.DisplayNameFor(model => model.FechaFin)
+                      </th>
+                      <th></th>
+                  </tr>
+
+                  @foreach (var item in Model)
+            {
+              <tr>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.Nombre)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.NivelCursos.DetalleNivel)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.SeccionesCursos.DetalleSeccion)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.EstadoCurso.Estado)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.FechaInicio)
+                  </td>
+                  <td>
+                      @Html.DisplayFor(modelItem => item.FechaFin)
+                  </td>
+                  <td>
+                      @if (User.IsInRole("Coordinador") && User.IsInRole("Profesor"))
+                {
+                  @Html.ActionLink("Editar", "Edit", new { id = item.IdCurso })
+                          <br />
+                  @Html.ActionLink("Contenido", "Index", "ContenidoCursoes", new { id = item.IdCurso }, null)
+                          <br />
+                  @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCurso })
+                          <br />
+                  @Html.ActionLink("Evaluaciones", "Index", "EvaluacionesCursos", new { IdCurso = item.IdCurso }, null)
+        }
+        else if (User.IsInRole("Administrador") || User.IsInRole("Coordinador"))
+        {
+          @Html.ActionLink("Editar", "Edit", new { id = item.IdCurso })
+                          <br />
+          @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCurso })
+}
+else
+{
+      @Html.ActionLink("Contenido", "Index", "ContenidoCursoes", new { id = item.IdCurso }, null)
+                          <br />
+      @Html.ActionLink("Evaluaciones", "Index", "EvaluacionesCursos", new { IdCurso = item.IdCurso }, null)
+}
+
+                  </td>
+              </tr>
+    }
+
+              </table>
+              </div>
+</div>

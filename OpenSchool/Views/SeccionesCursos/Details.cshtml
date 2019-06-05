@@ -1,0 +1,31 @@
+﻿@model OpenSchool.Models.SeccionesCursos
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Detalle</h2>
+        </div>
+        <div>
+            <h4>Secciones Cursos</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.DetalleSeccion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DetalleSeccion)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.IdSeccion }) |
+            @Html.ActionLink("Regresar", "Index")
+        </p>
+        </div>
+</div>

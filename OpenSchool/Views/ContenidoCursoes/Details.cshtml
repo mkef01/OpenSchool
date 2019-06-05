@@ -1,0 +1,119 @@
+﻿@model OpenSchool.Models.ContenidoCurso
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>@Html.DisplayFor(model => model.Contenido)</h2>
+            </div>
+
+            <hr />
+            @if (Model.TipoContenido.Tipo == "Texto")
+            {
+                <div class="container">
+                    <div>
+                        <p>
+                            @Html.DisplayFor(model => model.Archivo)
+                        </p>
+                    </div>
+                </div>
+            }
+            else if (Model.TipoContenido.Tipo == "Link")
+            {
+                <div class="container">
+                    <div class="row">
+                        <p>
+                            Para revisar todo el contenido, ingresa al siguiente enlace externo
+                        </p>
+                        <a href="@Model.Archivo">Haz click aquí</a>
+                    </div>
+                    <div class="row">
+                        <h3> @Html.DisplayFor(model => model.Archivo)</h3>
+                    </div>
+                </div>
+            }
+            else if (Model.TipoContenido.Tipo == "Video")
+            {
+                <div class="container">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="@Model.Archivo"></iframe>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+        @*<div>
+                <h4>Contenido</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cursos.Nombre)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Cursos.Nombre)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TipoContenido.Tipo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TipoContenido.Tipo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Usuarios.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Usuarios.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Contenido)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Contenido)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Archivo)
+                    </dt>
+                    @if (ViewBag.tipo == 1)
+                    {
+                        <dd>
+                            <a href="@Html.DisplayFor(x => x.Archivo).ToString()">Archivo</a>
+                        </dd>
+                    }
+                    @if (ViewBag.tipo != 1)
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => model.Archivo)
+                        </dd>
+                    }
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaPublicacion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaPublicacion)
+                    </dd>
+
+                </dl>
+            </div>*@
+        @*<p>
+             @Html.ActionLink("Edit", "Edit", new { id = Model.IdContenido }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@

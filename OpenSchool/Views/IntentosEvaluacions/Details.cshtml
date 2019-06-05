@@ -1,0 +1,51 @@
+﻿@model OpenSchool.Models.IntentosEvaluacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Detalle Intento</h2>
+        </div>
+
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Usuarios.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Usuarios.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaIntento)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FechaIntento)
+                </dd>
+                <dt>
+                    Nota
+                </dt>
+
+                <dd>
+                    @ViewBag.NotaFinal / @ViewBag.TotalPuntos
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @if (User.IsInRole("Profesor"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.IdIntento }) 
+}
+            <br />
+            @Html.ActionLink("Regresar", "Index", new { Id = Model.EvaluacionesCursos.IdCurso })
+        </p>
+        </div>
+</div>

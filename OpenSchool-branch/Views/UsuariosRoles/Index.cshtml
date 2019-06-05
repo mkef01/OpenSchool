@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OpenSchool.Models.UsuariosRoles>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <br />
+    <p class="h1">Listado de Usuarios Según Rol</p>
+</div>
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Roles.NombreRol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Roles.NombreRol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuarios.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdUsersRol }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdUsersRol }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdUsersRol })
+        </td>
+    </tr>
+}
+
+</table>

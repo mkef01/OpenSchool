@@ -1,0 +1,39 @@
+﻿@model OpenSchool.Models.ProfesoresCursos
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Detalles</h2>
+        </div>
+
+        <div>
+            <h4>Profesores por Cursos</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cursos.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cursos.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Usuarios.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Usuarios.Email)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.IdProfCur }) |
+            @Html.ActionLink("Regresar", "Index")
+        </p>
+        </div>
+</div>

@@ -1,0 +1,16 @@
+﻿@model OpenSchool.Models.Cursos
+@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm("Index", "VerificarInscripcion", FormMethod.Post))
+{
+	<div class="form-group">
+		<p></p>
+		Seleccione un Curso:
+		<p></p>
+		@Html.DropDownListFor(model => model.IdCurso, new SelectList(ViewBag.cursos, "IdCurso", "Nombre"), new {@class = "form-control"})
+		<p></p>
+		<button type="submit" class="btn btn-primary">Buscar</button>
+	</div>
+}
+

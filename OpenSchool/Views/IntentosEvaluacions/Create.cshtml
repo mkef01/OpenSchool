@@ -1,0 +1,57 @@
+﻿@model OpenSchool.Models.IntentosEvaluacion
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Crear</h2>
+        </div>
+        <div class="form-horizontal">
+            <h4>Intentos Evaluacion</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Id, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Id", String.Empty)
+                    @Html.ValidationMessageFor(model => model.Id)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdEvaluacion, "IdEvaluacion", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdEvaluacion", String.Empty)
+                    @Html.ValidationMessageFor(model => model.IdEvaluacion)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaIntento, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FechaIntento)
+                    @Html.ValidationMessageFor(model => model.FechaIntento)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+        }
+
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>

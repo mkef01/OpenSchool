@@ -1,0 +1,40 @@
+﻿@model OpenSchool.Models.CoordinadorCategorias
+
+@{
+    ViewBag.Title = "Editar";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="col-lg-12">
+    <div class="card">
+        <div class="form-group">
+            <p></p>
+            <h4>Editar</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.IdCoordCate)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdCategoria, "Categoria")
+                @Html.DropDownListFor(model => model.IdCategoria, (IEnumerable<SelectListItem>)ViewBag.IdCategoria, String.Empty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdCategoria)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Id, "Coordinador")
+                @Html.DropDownListFor(model => model.Id, (IEnumerable<SelectListItem>)ViewBag.Id, String.Empty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Id)
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </div>
+        </div>
+    </div>
+        }
+
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<OpenSchool.Models.TiposEvaluaciones>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Listado de Tipos de Evakuaciones</h2>
+        </div>
+        <p>
+            @Html.ActionLink("Crear Nuevo", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TipoEvaluacion)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEvaluacion)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdTipo }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.IdTipo }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipo })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+</div>

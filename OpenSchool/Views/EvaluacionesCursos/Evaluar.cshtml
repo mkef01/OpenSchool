@@ -1,0 +1,43 @@
+﻿@model OpenSchool.Models.IntentosEvaluacion
+
+@{
+    ViewBag.Title = "Evaluar";
+}
+
+<h2>Evaluar</h2>
+
+<div>
+    <h4>IntentosEvaluacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuarios.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuarios.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaIntento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaIntento)
+        </dd>
+
+        <dt>
+            Nota
+        </dt>
+
+        <dd>
+            @ViewBag.NotaFinal / @ViewBag.TotalPuntos
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdIntento }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

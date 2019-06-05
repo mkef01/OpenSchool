@@ -1,0 +1,104 @@
+﻿@using OpenSchool.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_layout(Login).cshtml";
+}
+
+<div class="materialContainer">
+
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    {
+    <div class="box">
+
+        <div class="title">Open School</div>
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="input">
+            @Html.LabelFor(m => m.Email, new { @for = "name" })
+            @Html.TextBoxFor(m => m.Email, new { @type = "text", name = "name", id = "name" })
+            <span class="spin"></span>
+
+        </div>
+        <div>
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="input">
+            @Html.LabelFor(m => m.Password, new { @for = "pass" })
+
+            @Html.PasswordFor(m => m.Password, new { @type = "password", name = "pass", id = "pass" })
+            <span class="spin"></span>
+
+        </div>
+        <div>
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            <div class="form-group" style="padding-top:10px">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding-top:10px">
+
+            @Html.ActionLink("¿Olvidaste tu contraseña?", "ForgotPassword")
+
+        </div>
+        <div class="button login">
+            <button type="submit"><span>Entrar</span> <i class="fa fa-check"></i></button>
+
+        </div>
+        @*<p>
+            @Html.ActionLink("Registrarse como nuevo usuario", "Register")
+        </p>*@
+        @*//Enable this once you have account confirmation enabled for password reset functionality*@
+
+    </div>
+    }
+
+    @using (Html.BeginForm("Visita", "Account", FormMethod.Post))
+    {
+        <div class="overbox">
+            @Html.AntiForgeryToken()
+            <div class="material-button alt-2">
+                <span class="shape"></span>
+            </div>
+
+            <div class="title">Visitante</div>
+
+            <div class="input">
+                <label for="NombreVisitante">Nombre Visitante</label>
+                @Html.TextBox("NombreVisitante","",new   { @type = "text", @name = "NombreVisitante", @id = "NombreVisitante" })
+                <span class="spin"></span>
+            </div>
+
+            <div class="input">
+                <label for="Email">Correo Visitante</label>
+
+                @Html.TextBox("Email","", new { @type = "email", @name = "Eail", @id = "Email" })
+                <span class="spin"></span>
+            </div>>
+
+            <div class="button">
+                <button type="submit"><span>Bienvenido</span></button>
+            </div>
+        </div>
+    }
+
+</div>
+        @*<div class="col-md-4">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>*@
+
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

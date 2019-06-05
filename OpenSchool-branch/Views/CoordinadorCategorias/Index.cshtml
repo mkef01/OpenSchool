@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OpenSchool.Models.CoordinadorCategorias>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <br />
+    <p class="h1">Listado de Coordinadores</p>
+</div>
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoriasCursos.DetalleCategoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoriasCursos.DetalleCategoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuarios.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdCoordCate }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdCoordCate }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdCoordCate })
+        </td>
+    </tr>
+}
+
+</table>

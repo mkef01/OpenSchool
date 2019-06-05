@@ -1,0 +1,24 @@
+﻿@model OpenSchool.Models.Modelo_Proyecto.Reporte
+@{
+    ViewBag.Title = "Buscar cusros";
+}
+<p></p>
+	@if (ViewBag.correcto == "SI")
+	{
+		<div class="alert alert-success" role="alert">
+			Se aprobo el alumno correctamente @Html.ActionLink("Volver a Inscripcion","Index","Aprobacion")
+		</div>
+	}
+	else
+	{
+		using (Html.BeginForm("Index", "Aprobacion", FormMethod.Post))
+		 {
+			 <div class="form-group">
+				 Seleccione el Curso
+				 <p></p>
+				 @Html.DropDownListFor(model => model.IdCurso, new SelectList(ViewBag.curso, "IdCurso", "Nombre"), new {@class = "form-control"})
+				 <p></p>
+				 <button class="btn btn-info" type="submit">Buscar Alumnos</button>
+			 </div>
+		 }
+	}

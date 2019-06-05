@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OpenSchool.Models.SeccionesCursos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <br />
+    <p class="h1">Listado de Secciones Cursos</p>
+</div>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DetalleSeccion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DetalleSeccion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdSeccion }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdSeccion }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdSeccion })
+        </td>
+    </tr>
+}
+
+</table>

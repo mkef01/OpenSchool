@@ -1,0 +1,157 @@
+﻿@model OpenSchool.Models.EvaluacionesCursos
+
+@{
+    ViewBag.Title = "DetalleEvaluacion";
+}
+
+<div>
+    <br /><br />
+    <h4>Evaluacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cursos.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cursos.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TiposEvaluaciones.TipoEvaluacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TiposEvaluaciones.TipoEvaluacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuarios.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuarios.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Detalle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detalle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Intentos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Intentos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ponderacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ponderacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaFin)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="col-md-12">
+    <div class="text-center">
+        <p class="h4">Preguntas</p>
+    </div>
+    <div class="panel-body">
+        <table id="mytable" class="table table-striped table-bordered table-list">
+            <thead>
+                <tr style="white-space:nowrap;">
+                    <th class="hidden-xs">
+                        @Html.DisplayNameFor(model => model.PreguntasEvaluacion.FirstOrDefault().EvaluacionesCursos.IdEvaluacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PreguntasEvaluacion.FirstOrDefault().TipoPregunta.Tipo_Pregunta)
+                    </th>
+                    <th class="hidden-xs">
+                        @Html.DisplayNameFor(model => model.PreguntasEvaluacion.FirstOrDefault().Pregunta)
+                    </th>
+                    <th class="hidden-xs">
+                        Respuestas
+                    </th>
+                    <th class="hidden-xs">
+                        @Html.DisplayNameFor(model => model.PreguntasEvaluacion.FirstOrDefault().Ponderacion)
+                    </th>
+                    <th class="hidden-xs">
+                        Editar
+                    </th>
+
+<tbody>
+                @foreach (var item in Model.PreguntasEvaluacion)
+                {
+                <tr>
+                    <td class="hidden-xs">
+                        @Html.DisplayFor(modelItem => item.EvaluacionesCursos.IdEvaluacion)
+                    </td>
+                    <td class="hidden-xs">
+                        @Html.DisplayFor(modelItem => item.TipoPregunta.Tipo_Pregunta)
+                    </td>
+                    <td class="hidden-xs">
+                        @Html.DisplayFor(modelItem => item.Pregunta)
+                    </td>
+                    <td class="hidden-xs">
+                        @foreach (var item1 in item.RespuestasEvaluacion)
+
+                        {
+                           
+                            @Html.DisplayFor(modelItem => item1.Respuesta)
+                            <br />
+
+                        }
+                    </td>
+                    <td class="hidden-xs">
+                        @Html.DisplayFor(modelItem => item.Ponderacion)
+                    </td>
+                    <td class="hidden-xs">
+                        <a class="btn btn-dangers" style="min-width:20px;" href="@Url.Action("Edit","PreguntasEvaluacions", new { id=item.IdPregunta })">
+                            <span class="glyphicon glyphicon-pencil"
+                                  aria-hidden="true">Editar</span>
+                        </a>
+                        <br />
+                        <a class="btn btn-success" style="min-width:20px;" href="@Url.Action("DetalleRespuestas", "PreguntasEvaluacions", new { id = item.IdPregunta })">
+                            <span class="glyphicon glyphicon-pencil"
+                                  aria-hidden="true">Respuestas</span>
+                        </a>
+                    </td>
+
+                </tr>
+
+                }
+        </table>
+    </div>
+</div>
+
+<a class="btn btn-danger" style="min-width:20px;" href="@Url.Action("Create", "PreguntasEvaluacions", new { IdEvaluacion = Model.IdEvaluacion })">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true">Agregar Preguntas</span>
+</a>
+<a class="btn btn-success" style="min-width:20px;" href="@Url.Action("Index","EvaluacionesCursos", new { idCurso= Model.IdCurso})">
+    <span class="glyphicon glyphicon-pencil"
+          aria-hidden="true">Lista de Examenes</span>
+</a>

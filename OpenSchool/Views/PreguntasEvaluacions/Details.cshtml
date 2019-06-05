@@ -1,0 +1,50 @@
+﻿@model OpenSchool.Models.PreguntasEvaluacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PreguntasEvaluacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluacionesCursos.IdEvaluacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluacionesCursos.IdEvaluacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPregunta.Tipo_Pregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoPregunta.Tipo_Pregunta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pregunta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ponderacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ponderacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdPregunta }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

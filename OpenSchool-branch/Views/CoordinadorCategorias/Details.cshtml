@@ -1,0 +1,34 @@
+﻿@model OpenSchool.Models.CoordinadorCategorias
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CoordinadorCategorias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoriasCursos.DetalleCategoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoriasCursos.DetalleCategoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuarios.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCoordCate }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

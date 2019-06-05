@@ -1,0 +1,34 @@
+﻿@model OpenSchool.Models.UsuariosRoles
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UsuariosRoles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles.NombreRol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Roles.NombreRol)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuarios.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuarios.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdUsersRol }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

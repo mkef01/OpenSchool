@@ -1,0 +1,86 @@
+﻿@model OpenSchool.Models.ContenidoCurso
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Eliminar</h2>
+        </div>
+        <h3>¿Estás seguro de eliminarlo?</h3>
+        <div>
+    <h4>Contenido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cursos.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cursos.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoContenido.Tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoContenido.Tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuarios.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuarios.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contenido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contenido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Archivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Archivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaPublicacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPublicacion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-primary" /> |
+            @Html.ActionLink("Regresar", "Index", new { id = Model.IdCurso })
+        </div>
+        }
+    </div>
+        </div>
+
+</div>

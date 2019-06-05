@@ -1,0 +1,46 @@
+﻿@model OpenSchool.Models.ProfesoresCursos
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h4>Asignar Profesor a Curso</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdCursos, "Nombre del Curso", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdCursos", String.Empty)
+                        @Html.ValidationMessageFor(model => model.IdCursos)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdUsuario, "Código Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdUsuario", String.Empty)
+                        @Html.ValidationMessageFor(model => model.IdUsuario)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+            }
+

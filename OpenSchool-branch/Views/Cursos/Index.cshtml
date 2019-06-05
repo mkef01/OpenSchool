@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OpenSchool.Models.Cursos>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br /><br />
+<div class="text-center">
+    <p class="h1">Listado de Cursos</p>
+</div>
+<p>
+    @*@Html.ActionLink("Nuevo", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NivelCursos.DetalleNivel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeccionesCursos.DetalleSeccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoCurso.Estado)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaFin)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NivelCursos.DetalleNivel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeccionesCursos.DetalleSeccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoCurso.Estado)
+        </td>      
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaInicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaFin)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdCurso }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdCurso }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdCurso })
+        </td>
+    </tr>
+}
+
+</table>

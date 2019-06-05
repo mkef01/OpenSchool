@@ -1,0 +1,59 @@
+﻿@model IEnumerable<OpenSchool.Models.Modelo_Proyecto.Estado>
+	@{
+	ViewBag.Title = "EstadoCurso";
+	}
+
+	@foreach (var items in Model)
+	{
+	if (items.EstadoSolicitud == "Aprobado")
+	{
+	<div class="row">
+		<div class="card col-md-8 offset-md-2">
+			<div class="card-header">
+				@Html.DisplayFor(model => items.NombreCurso)
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">@Html.DisplayFor(model => items.NombreCurso)</h5>
+				<p class="card-text">Id Curso: @Html.DisplayFor(model => items.IdCurso)</p>
+				<div class="alert alert-success" role="alert">
+					Curso Aprobado
+				</div>
+			</div>
+		</div>
+	</div>
+	}
+	if (items.EstadoSolicitud == "Sin Procesar")
+	{
+	<div class="row">
+		<div class="card col-md-8 offset-md-2">
+			<div class="card-header">
+				@Html.DisplayFor(model => items.NombreCurso)
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">@Html.DisplayFor(model => items.NombreCurso)</h5>
+				<p class="card-text">Id Curso: @Html.DisplayFor(model => items.IdCurso)</p>
+				<div class="alert alert-danger" role="alert">
+					Curso en proceso de aprobacion
+				</div>
+			</div>
+		</div>
+	</div>
+	}
+	if (items.EstadoSolicitud == "Finalizado")
+	{
+	<div class="row">
+		<div class="card col-md-8 offset-md-2">
+			<div class="card-header">
+				@Html.DisplayFor(model => items.NombreCurso)
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">@Html.DisplayFor(model => items.NombreCurso)</h5>
+				<p class="card-text">Id Curso: @Html.DisplayFor(model => items.IdCurso)</p>
+				<div class="alert alert-dark" role="alert">
+					Curso Finalizado
+				</div>
+			</div>
+		</div>
+	</div>
+	}
+	}

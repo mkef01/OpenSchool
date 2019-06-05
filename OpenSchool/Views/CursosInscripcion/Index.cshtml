@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OpenSchool.Models.SolicitudesInscripcion>
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<h2>Inscripciones</h2>
+
+<div class="table-container">
+    <table class="table table-filter">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-success" style="min-width:20px;" >
+                            <span class="glyphicon glyphicon-pencil"
+                                  aria-hidden="true">Inscribir</span>
+                        </a>
+                        <a class="btn btn-info" style="min-width:20px;">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true">Ver</span>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="media">
+                            <a href="#" class="pull-left">
+                                
+                            </a>
+                            <div class="media-body">
+                                <span class="media-meta pull-right"></span>
+                                <h4 class="title">
+                                    @Html.DisplayFor(model => item.Nombre)
+                                </h4>
+                                <p class="summary">Seccion: @Html.DisplayFor(model => item.Seccion)</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

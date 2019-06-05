@@ -1,0 +1,233 @@
+﻿@model IEnumerable<OpenSchool.Models.PreguntasEvaluacion>
+
+@{
+    ViewBag.Title = "Intento";
+}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<style>
+    .container-control {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        .container-control input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 41%;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+    }
+
+    .container-control:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    .container-control input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .container-control input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .container-control .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .checkmark-radio {
+        position: absolute;
+        top: 0;
+        left: 41%;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        -ms-border-radius: 50%;
+        border-radius: 50%;
+    }
+
+    .container-control:hover input ~ .checkmark-radio {
+        background-color: #ccc;
+    }
+
+    .container-control input:checked ~ .checkmark-radio {
+        background-color: #2196F3;
+    }
+
+    .checkmark-radio:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .container-control input:checked ~ .checkmark-radio:after {
+        display: block;
+    }
+
+    .container-control .checkmark-radio:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        -ms-border-radius: 50%;
+        border-radius: 50%;
+        background: white;
+    }
+</style>
+
+<h2>Intento</h2>
+
+<table width="100%" align="center">
+    <tr>
+        <td>
+            <div id="inicio"></div><br />
+            <div id="fin"></div><br />
+            <div id="tiempo"></div>
+        </td>
+    </tr>
+</table>
+
+
+@using (Html.BeginForm("Evaluar", "EvaluacionesCursos", FormMethod.Post, new { id = "examenForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="examen-div" style="margin-bottom: 10%;">
+        <div id="examen">
+            <input type="hidden" name="id" value="@ViewBag.IntentoId" />
+            @foreach (var item in Model)
+            {
+                <div class="slide">
+                    <div class="pregunta"> @Html.DisplayFor(modelItem => item.Pregunta) </div>
+
+                    @switch (item.TipoPregunta.Tipo_Pregunta)
+                    {
+                        case "OpcionMultiple":
+                            <select name="@item.IdPregunta">
+                                @foreach (var respuesta in item.RespuestasEvaluacion)
+                                {
+                                    <option value="@respuesta.IdRespuesta">@respuesta.Respuesta</option>
+                                }
+                            </select>
+                            break;
+
+                        case "Radio":
+                            foreach (var respuesta in item.RespuestasEvaluacion)
+                            {
+                                <label class="container-control">
+                                    @respuesta.Respuesta
+                                    <input type="radio" name="@respuesta.IdPregunta" value="@respuesta.IdRespuesta">
+                                    <span class="checkmark-radio"></span>
+                                </label>
+                            }
+                            break;
+
+                        case "TextArea":
+
+                            <textarea name="@item.IdPregunta"></textarea>
+
+                            break;
+
+                        case "Checkbox":
+                            foreach (var respuesta in item.RespuestasEvaluacion)
+                            {
+                                var name = $"{respuesta.IdPregunta}[]";
+                                <label class="container-control">
+                                    @respuesta.Respuesta
+                                    <input type="checkbox" name="@name" value="@respuesta.IdRespuesta">
+                                    <span class="checkmark"></span>
+                                </label>
+                            }
+
+                            break;
+
+                        case "Text":
+
+                            <input type="text" name="@item.IdPregunta">
+
+                            break;
+                    }
+                </div>
+            }
+
+
+        </div>
+    </div>
+    <button id="enviar" type="submit">Enviar</button>
+}
+<button id="anterior">Anterior</button>
+<button id="siguiente">Siguiente</button>
+
+<div id="resultados"></div>
+
+<script src="~/Scripts/examen.js"></script>
+
+
+<script>
+    var tiempo;
+
+    var minutos = @ViewBag.Minutos;
+    var segundos = @ViewBag.Segundos;
+    var tiempoActual = new Date();
+
+    function init() {
+        calculo();
+        document.getElementById("inicio").innerHTML =
+            `El examen se inicio ${tiempoActual.getHours()} : ${tiempoActual.getMinutes()}`;
+    }
+
+    function calculo() {
+        if (parseInt(segundos) > 0) {
+            segundos = parseInt(segundos) - 1;
+            document.getElementById("tiempo").innerHTML = `Tiempo restante : ${minutos} : ${segundos} segundos`;
+            tiempo = setTimeout("calculo()", 1000);
+        } else {
+            if (parseInt(segundos) === 0) {
+                minutos = parseInt(minutos) - 1;
+                if (parseInt(minutos) === 0) {
+                    clearTimeout(tiempo);
+                    document.getElementById("examenForm").submit();
+                } else {
+                    segundos = 60;
+                    document.getElementById("tiempo").innerHTML = `Tiempo restante ${minutos} : ${segundos} segundos`;
+                    tiempo = setTimeout("calculo()", 1000);
+                }
+            }
+
+        }
+    }
+
+    init();
+</script>
+

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<OpenSchool.Models.RespuestasEvaluacion>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Listado de Respuestas</h2>
+        </div>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PreguntasEvaluacion.Pregunta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Respuesta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ponderacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Correcta)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PreguntasEvaluacion.Pregunta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Respuesta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ponderacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Correcta)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdRespuesta }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.IdRespuesta }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRespuesta })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+</div>

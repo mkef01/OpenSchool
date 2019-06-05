@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OpenSchool.Models.CursosCategorias>
+
+@{
+    ViewBag.Title = "IndexCoord";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Listado de Curso por Categoria</h2>
+        </div>
+        <p>
+            @Html.ActionLink("Crear Nuevo", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoriasCursos.DetalleCategoria)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cursos.Nombre)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoriasCursos.DetalleCategoria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cursos.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.IdCurCate }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.IdCurCate }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.IdCurCate })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+</div>

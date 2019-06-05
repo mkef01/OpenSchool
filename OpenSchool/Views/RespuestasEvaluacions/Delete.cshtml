@@ -1,0 +1,61 @@
+﻿@model OpenSchool.Models.RespuestasEvaluacion
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Eliminar</h2>
+        </div>
+        <h3>¿Estás seguro de eliminarlo?</h3>
+        <div>
+            <h4>Respuestas Evaluacion</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PreguntasEvaluacion.IdPregunta)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PreguntasEvaluacion.IdPregunta)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Respuesta)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Respuesta)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ponderacion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ponderacion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Correcta)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Correcta)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                    @Html.ActionLink("Regresar", "Index")
+                </div>
+            }
+        </div>
+        </div>
+</div>

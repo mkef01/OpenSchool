@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    @Styles.Render("~/bundles/css")
+    @Styles.Render("~/Content/css")
+    <style>
+        .bootstrap-datetimepicker-widget .btn {
+            min-width: 0 !important;
+        }
+
+        .bootstrap-datetimepicker-widget table td span {
+            color: #337ab7 !important;
+        }
+
+        .bootstrap-datetimepicker-widget .btn:hover {
+            background-color: transparent !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Side Navbar -->
+    <nav class="side-navbar">
+        <div class="side-navbar-wrapper">
+            <!-- Sidebar Header    -->
+            <div class="sidenav-header d-flex align-items-center justify-content-center">
+                <!-- User Info-->
+                <div class="sidenav-header-inner text-center">
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <h2 class="h5">@User.Identity.Name</h2><span> Administrador</span>
+                    }
+                    else if (User.IsInRole("Coordinador"))
+                    {
+                        <h2 class="h5">@User.Identity.Name</h2><span> Coordinador</span>
+                    }
+                    else if (User.IsInRole("Profesor"))
+                    {
+                        <h2 class="h5">@User.Identity.Name</h2><span> Profesor</span>
+                    }
+                    else if (User.IsInRole("Alumno"))
+                    {
+                        <h2 class="h5">@User.Identity.Name</h2><span> Estudiante</span>
+                    }
+                    else
+                    {
+                        <h2 class="h5">Visitante</h2>
+                    }
+                </div>
+                <!-- Small Brand information, appears on minimized sidebar-->
+                <div class="sidenav-header-logo"><a class="brand-small text-center"><strong>O</strong><strong class="text-primary">S</strong></a></div>
+            </div>
+
+            @if (User.IsInRole("Administrador"))
+            {
+                <div class="main-menu">
+                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                        <!--Administrador Opciones-->
+                        <li><a href="@Url.Action("Index","Home")"> <i class="fas fa-home"></i>Administrador</a></li>
+                        <li><a href="@Url.Action("Create","CoordinadorCategorias")"> <i class="fas fa-check"></i>Asignar Coordinador</a></li>
+                        <li>
+                            <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Crear</a>
+                            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                                <li>@Html.ActionLink("Crear Nivel", "Create", "NivelCursos")</li>
+                                <li>@Html.ActionLink("Crear Sección", "Create", "SeccionesCursos")</li>
+                                <li>@Html.ActionLink("Crear Curso", "Create", "Cursos")</li>
+                                <li>@Html.ActionLink("Crear Usuario", "Register", "Account")</li>
+                                <li>@Html.ActionLink("Asignar Categoria a Curso", "Create", "CursosCategorias")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Ver</a>
+                            <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                                <li>@Html.ActionLink("Ver Nivel", "Index", "NivelCursos")</li>
+                                <li>@Html.ActionLink("Ver Seccion", "Index", "SeccionesCursos")</li>
+                                <li>@Html.ActionLink("Ver Curso", "Index", "Cursos")</li>
+                            </ul>
+                        </li>
+                        <li><a href="@Url.Action("IndexAdmin","Dashboard")"> <i class="fas fa-chart-line"></i>Reportes</a></li>
+                        <li><a href="@Url.Action("Index","Chat")"> <i class="fas fa-comments"></i>Chat</a></li>
+                    </ul>
+                </div>
+            }
+            else if (User.IsInRole("Coordinador") && User.IsInRole("Profesor"))
+            {
+                <div class="main-menu">
+                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                        <!--Administrador Opciones-->
+                        <li><a href="@Url.Action("Index","Home")"> <i class="fas fa-home"></i>Inicio</a></li>
+                        <li>
+                            <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Crear</a>
+                            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                                <li>@Html.ActionLink("Agregar Profesor a Curso", "Create", "ProfesoresCursos")</li>
+                                <li>@Html.ActionLink("Crear Usuario", "Register", "Account")</li>
+                            </ul>
+                        </li>
+	                    <li>
+		                    <a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Ver/Aprobaciones</a>
+		                    <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+			                    <li>@Html.ActionLink("Ver Profesor", "Index", "ProfesoresCursos")</li>
+			                    <li>@Html.ActionLink("Aprobacion/Alumnos", "Index", "ProfesoresCursos")</li>
+			                    <li>@Html.ActionLink("Ver Curso", "Index", "Cursos")</li>
+			                    <li>@Html.ActionLink("Crear Evaluaciones", "Create", "NivelCursos")</li>
+		                    </ul>
+	                    </li>
+	                    <li><a href="@Url.Action("Create","CoordinadorCategorias")"> <i class="fas fa-check"></i>Dar Seguimiento</a></li>
+                        <li><a href="@Url.Action("IndexAdmin","Dashboard")"> <i class="fas fa-chart-line"></i>Reportes Generales</a></li>
+                        <li><a href="@Url.Action("IndexProf","Dashboard")"> <i class="fas fa-chart-line"></i>Reportes</a></li>
+                        <li><a href="@Url.Action("Index","Chat")"> <i class="fas fa-comments"></i>Chat</a></li>
+                    </ul>
+                </div>
+            }
+            else if (User.IsInRole("Profesor"))
+            {
+                <div class="main-menu">
+                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                        <!--Administrador Opciones-->
+                        <li><a href="@Url.Action("Index","Home")"> <i class="fas fa-home"></i>Profesor</a></li>
+                        
+	                    <li>
+		                    <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Crear</a>
+		                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+			                    <li>@Html.ActionLink("Ver Curso", "Index", "Cursos")</li>
+			                    <li>@Html.ActionLink("Crear Evaluaciones", "Create", "EvaluacionesCursos")</li>
+		                    </ul>
+	                    </li>
+	                    <li><a href="@Url.Action("Index","Aprobacion")"> <i class="fas fa-check-square"></i>Verificar Aprobacion</a></li>
+                        <li><a href="@Url.Action("IndexProf","Dashboard")"> <i class="fas fa-chart-line"></i>Reportes</a></li>
+                        <li><a href="@Url.Action("Index","Chat")"> <i class="fas fa-comments"></i>Chat</a></li>
+                    </ul>
+                </div>
+            }
+            else if (User.IsInRole("Alumno"))
+            {
+                <div class="main-menu">
+                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                        <!--Administrador Opciones-->
+                        <li><a href="@Url.Action("Index","Home")"> <i class="fas fa-home"></i>Alumno</a></li>
+                        <li><a href="@Url.Action("Index","Cursos")"> <i class="fas fa-book-open"></i>Mis Cursos</a></li>
+                        <li><a href="@Url.Action("Cursos","Alumno")"> <i class="fas fa-check"></i>Inscribirse</a></li>
+                        <li>
+                            <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Consultar Cursos</a>
+                            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                                <li>@Html.ActionLink("Estado aprobacion", "EstadoCurso", "Alumno")</li>
+                                <li>@Html.ActionLink("Ver Curso", "Index", "Cursos")</li>
+                            </ul>
+                        </li>
+                        <li><a href="@Url.Action("IndexAlumn","Dashboard")"> <i class="fas fa-chart-line"></i>Reportes</a></li>
+                        <li><a href="@Url.Action("Index","Chat")"> <i class="fas fa-comments"></i>Chat</a></li>
+                    </ul>
+                </div>
+            }
+            else if (User.IsInRole("Coordinador"))
+            {
+                <div class="main-menu">
+                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                        <!--Administrador Opciones-->
+                        <li><a href="@Url.Action("Index","Home")"> <i class="fas fa-home"></i>Coordinador</a></li>
+                        <li>
+                            <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Crear</a>
+                            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                                <li>@Html.ActionLink("Agregar Profesor a Curso", "Create", "ProfesoresCursos")</li>
+                                <li>@Html.ActionLink("Crear Usuario", "Register", "Account")</li>
+                            </ul>
+                        </li>
+	                    <li>
+		                    <a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="far fa-plus-square"></i>Ver/Aprobaciones</a>
+		                    <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+			                    <li>@Html.ActionLink("Ver Profesor", "Index", "ProfesoresCursos")</li>
+			                    <li>@Html.ActionLink("Aprobacion/Alumnos", "Index", "VerificarInscripcion")</li>
+			                    <li>@Html.ActionLink("Eliminar Inscripcion", "Borrar", "VerificarInscripcion")</li>
+			                    <li>@Html.ActionLink("Ver Curso", "Index", "Cursos")</li>
+		                    </ul>
+	                    </li>
+	                    <li><a href="@Url.Action("Create","CoordinadorCategorias")"> <i class="fas fa-check"></i>Dar Seguimiento</a></li>
+	                    <li><a href="@Url.Action("IndexAdmin","Dashboard")"> <i class="fas fa-chart-line"></i>Reportes</a></li>
+                        <li><a href="@Url.Action("Index","Chat")"> <i class="fas fa-comments"></i>Chat</a></li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="main-menu">
+                    <ul id="side-main-menu" class="side-menu list-unstyled">
+                        <!--Administrador Opciones-->
+                        <li><a href="@Url.Action("Index","CursosVisita")"> <i class="fas fa-home"></i>Inicio</a></li>
+                    </ul>
+                </div>
+
+            }
+
+
+            <!---------------------------------- TERMINAAAAAAAAAAAAAAA--------------------------->
+
+
+
+
+
+        </div>
+    </nav>
+    <div class="page">
+        <header class="header">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <div class="navbar-header">
+                            <a id="toggle-btn" href="#" class="menu-btn"><i class="fas fa-bars"> </i></a><a href="@Url.Action("Index","Home")" class="navbar-brand">
+                                <div class="brand-text d-none d-md-inline-block"><span>Open</span><strong class="text-primary">School</strong></div>
+                            </a>
+                        </div>
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <!-- Log out-->
+                            @Html.Partial("_LoginPartial")
+                            @*<li class="nav-item"><a href="@Url.Action("Index","Login")" class="nav-link logout"> <span class="d-none d-sm-inline-block">Logout</span><i class="fas fa-sign-out-alt"></i></a></li>*@
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="../../Repository/assets/jquery/jquery-3.1.0.min.js"></script>
+    <script src="../../Scripts/popper.js/umd/popper.min.js"></script>
+    <script src="../../Scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../Scripts/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+    <script src="../../Scripts/jquery.cookie/jquery.cookie.js"></script>
+    <script src="../../Scripts/chart.js/Chart.min.js"></script>
+    <script src="../../Scripts/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../../Scripts/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../../Scripts/js/charts-home.js"></script>
+    <!-- Main File-->
+    <script src="../../Scripts/js/front.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBL6gbhsnCEt4FS9D6BBl3mZO1xy-NcwpE&sensor=false"></script>
+    @RenderSection("scripts", required: false)
+    <script src="~/Content/jquery-simple-datetimepicker-1.12.0/jquery.simple-dtpicker.js"></script>
+    <link href="~/Content/jquery-simple-datetimepicker-1.12.0/jquery.simple-dtpicker.css" rel="stylesheet" />
+
+
+    <script>
+        $(document).ready(function () {
+            $('#FechaInicio').appendDtpicker();
+
+            $('#FechaFin').appendDtpicker();
+        });
+    </script>
+</body>
+</html>

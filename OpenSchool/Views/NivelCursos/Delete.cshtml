@@ -1,0 +1,38 @@
+﻿@model OpenSchool.Models.NivelCursos
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2>Eliminar</h2>
+        </div>
+        <h3>¿Estás seguro de eliminarlo?</h3>
+        <div>
+            <h4>NivelCursos</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.DetalleNivel)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DetalleNivel)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-primary" /> |
+                    @Html.ActionLink("Regresar", "Index")
+                </div>
+            }
+        </div>
+        </div>
+</div>
